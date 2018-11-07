@@ -27,10 +27,10 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML =
-    (props ? "<h4>Precinct: "+props.PCTNAME+"</h4>"+
-	"<table><tr><td>Democratic votes: </td><td>"+props.USPRSDFL+"</td></tr>"+
-	"<tr><td>Republican votes: </td><td>"+props.USPRSR+"</td></tr>"+
-	"<tr><td>Total votes: </td><td>"+props.USPRSTOTAL+"</td></tr></table>" : "Hover over a precinct to see vote counts");
+        (props ? "<h4>Precinct: " + props.PCTNAME + "</h4>" +
+            "<table><tr><td>Democratic votes: </td><td>" + props.USPRSDFL + "</td></tr>" +
+            "<tr><td>Republican votes: </td><td>" + props.USPRSR + "</td></tr>" +
+            "<tr><td>Total votes: </td><td>" + props.USPRSTOTAL + "</td></tr></table>" : "Hover over a precinct to see vote counts");
 };
 
 info.addTo(map);
@@ -38,53 +38,53 @@ info.addTo(map);
 ///////////////////////////////////////////////////////////////////////////////
 // ADDING AND SYMBOLIZING GEOJSON
 // create request for GeoJSON
-var request = new Promise(function(resolve, reject){
+var request = new Promise(function (resolve, reject) {
 	var request = new XMLHttpRequest();
-	request.addEventListener("load", function(){ resolve(this.responseText) });
+	request.addEventListener("load", function () { resolve(this.responseText) });
 	request.open("GET", "data/duluth_precincts_WGS84.geojson");
 	request.send();
 });
 
 // handle request
-request.then(function(values){
+request.then(function (values) {
 	// parse the incoming datasets into JSON format
 	var precincts = JSON.parse(values);
 	console.log('precincts:', precincts);
 
 	// our style method for the precincts
-	function style (feature) {
-    var demVote = feature.properties.USPRSDFL;
-    var repVote = feature.properties.USPRSR;
-    var totalVote = feature.properties.USPRSTOTAL;
-    var pctDem = (demVote / totalVote) * 100;
-    var pctRep = (repVote / totalVote) * 100;
-    var proportionDem = pctDem - pctRep;
+	function style(feature) {
+        var demVote = feature.properties.USPRSDFL;
+        var repVote = feature.properties.USPRSR;
+        var totalVote = feature.properties.USPRSTOTAL;
+        var pctDem = (demVote / totalVote) * 100;
+        var pctRep = (repVote / totalVote) * 100;
+        var proportionDem = pctDem - pctRep;
 
 
     // console.log('demVote:', demVote);
     // console.log('repVote:', repVote);
     // console.log('totalVote:', totalVote);
-    console.log('proportionDem:', proportionDem);
+        console.log('proportionDem:', proportionDem);
 
-    var fill;
+        var fill;
     // quantile classification
-    if (proportionDem <= 21) {
-    fill = '#deebf7';
-    }
-    else if (proportionDem <= 34) {
-    fill = '#9ecae1';
-    }
-    else {
-    fill = '#3182bd';
-    }
+        if (proportionDem <= 21) {
+            fill = '#deebf7';
+        }
+            else if (proportionDem <= 34) {
+            fill = '#9ecae1';
+        }
+            else {
+                fill = '#3182bd';
+            }
 
     // return style specification
         return {
-        color: '#636363',
-        dashArray: '3',
-        weight: 1,
-        fillColor: fill,
-        fillOpacity: 0.7
+            color: '#636363',
+            dashArray: '3',
+            weight: 1,
+            fillColor: fill,
+            fillOpacity: 0.7
         };
     }
 
@@ -102,15 +102,15 @@ request.then(function(values){
 	function highlightFeature(e) {
 		// get the feature that was targeted in this event
 		// (ie. the one that is being hovered over)
-    var feature = e.target;
+        var feature = e.target;
 
     // set the new style for the feature
-    feature.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
+        feature.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
 
         // bring the feature to the front (except for some browsers)
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -172,7 +172,7 @@ function mapHoverHandler(eventObject) {
     console.log('mouse lat/long', eventObject.latlng);
     //update mouse coordinates HTML element with event latlng
     
-document.getElementById("mouseCoordinatesBox").innerHTML="newtext";
+    document.getElementById("mouseCoordinatesBox").innerHTML = "newtext";
     
 }
 //  - second, register an event listener with the map
