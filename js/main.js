@@ -53,38 +53,38 @@ request.then(function(values){
 
 	// our style method for the precincts
 	function style (feature) {
-    	var demVote = feature.properties.USPRSDFL;
-    	var repVote = feature.properties.USPRSR;
-    	var totalVote = feature.properties.USPRSTOTAL;
-    	var pctDem = (demVote / totalVote) * 100;
-    	var pctRep = (repVote / totalVote) * 100;
-    	var proportionDem = pctDem - pctRep;
+    var demVote = feature.properties.USPRSDFL;
+    var repVote = feature.properties.USPRSR;
+    var totalVote = feature.properties.USPRSTOTAL;
+    var pctDem = (demVote / totalVote) * 100;
+    var pctRep = (repVote / totalVote) * 100;
+    var proportionDem = pctDem - pctRep;
 
 
-    	// console.log('demVote:', demVote);
-    	// console.log('repVote:', repVote);
-    	// console.log('totalVote:', totalVote);
-    	console.log('proportionDem:', proportionDem);
+    // console.log('demVote:', demVote);
+    // console.log('repVote:', repVote);
+    // console.log('totalVote:', totalVote);
+    console.log('proportionDem:', proportionDem);
 
-    	var fill;
-    	// quantile classification
-    	if (proportionDem <= 21) {
-    		fill = '#deebf7';
-    	}
-    	else if (proportionDem <= 34) {
-    		fill = '#9ecae1';
-    	}
-    	else {
-    		fill = '#3182bd';
-    	}
+    var fill;
+    // quantile classification
+    if (proportionDem <= 21) {
+    fill = '#deebf7';
+    }
+    else if (proportionDem <= 34) {
+    fill = '#9ecae1';
+    }
+    else {
+    fill = '#3182bd';
+    }
 
-    	// return style specification
+    // return style specification
         return {
-        	color: '#636363',
-        	dashArray: '3',
-        	weight: 1,
-        	fillColor: fill,
-        	fillOpacity: 0.7
+        color: '#636363',
+        dashArray: '3',
+        weight: 1,
+        fillColor: fill,
+        fillOpacity: 0.7
         };
     }
 
@@ -102,81 +102,82 @@ request.then(function(values){
 	function highlightFeature(e) {
 		// get the feature that was targeted in this event
 		// (ie. the one that is being hovered over)
-	    var feature = e.target;
+    var feature = e.target;
 
-	    // set the new style for the feature
-	    feature.setStyle({
-	        weight: 5,
-	        color: '#666',
-	        dashArray: '',
-	        fillOpacity: 0.7
-	    });
+    // set the new style for the feature
+    feature.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
 
-	    // bring the feature to the front (except for some browsers)
-	    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-	        feature.bringToFront();
-	    }
+        // bring the feature to the front (except for some browsers)
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            feature.bringToFront();
+        }
 
-	    // update the info box
-	    info.update(feature.feature.properties);
+        // update the info box
+        info.update(feature.feature.properties);
 	}
 
 	// mouseout handler
 	// reset the style to normal
 	function resetHighlight(e) {
-	    precinctsLayer.resetStyle(e.target);
-	    info.update();
+        precinctsLayer.resetStyle(e.target);
+        info.update();
 	}
 
 	// do something for each feature in the layer when you load the layer
 	// in this case it's adding these event listeners
 	function onEachFeature(feature, layer) {
-	    layer.on({
-	    	// mouse enters the feature (polygon)
-	        mouseover: highlightFeature,
-	        // mouse leaves the feature
-	        mouseout: resetHighlight
-	    });
+        layer.on({
+            // mouse enters the feature (polygon)
+            mouseover: highlightFeature,
+            // mouse leaves the feature
+            mouseout: resetHighlight
+        });
 	}
 
 	// Finally, now that everything is defined we can create the layer and
 	// add it to the map
 	//create a polygon layer for precincts
 	var precinctsLayer = L.geoJSON(precincts, {
-	    style: style,
-	    onEachFeature: onEachFeature
+        style: style,
+        onEachFeature: onEachFeature
     });
 
 	// add precincts layer to map
-  	precinctsLayer.addTo(map);
+    precinctsLayer.addTo(map);
 
-  	
+
 
 });
 
 // FIXME: Display the current location of the mouse in latitude and
-  	// longitude coordinates.
-  	// Update this display as the mouse moves around the map.
-  	// This doesn't have to use a leaflet control like the example above
-  	// but it could
-  	// hint: make use of the map events found here:
-  	// https://leafletjs.com/reference-1.3.4.html#map-click
-  	// and the lat/long that is a part of mouse events here:
-  	// https://leafletjs.com/reference-1.3.4.html#mouseevent-latlng
+// longitude coordinates.
+// Update this display as the mouse moves around the map.
+// This doesn't have to use a leaflet control like the example above
+// but it could
+// hint: make use of the map events found here:
+// https://leafletjs.com/reference-1.3.4.html#map-click
+// and the lat/long that is a part of mouse events here:
+// https://leafletjs.com/reference-1.3.4.html#mouseevent-latlng
 
-  	// more hints:
-  	//  - first, create an event handler that will take the lat / long
-  	//    and update an HTML (div) element with that information
+// more hints:
+//  - first, create an event handler that will take the lat / long
+//    and update an HTML (div) element with that information
 function mapHoverHandler(eventObject) {
- //   console.log('eventObject', eventObject);
-    console.log('mouse lat/lng', eventObject.latlng);
+ //   console.log('event object', eventObject);
+    console.log('mouse lat/long', eventObject.latlng);
     //update mouse coordinates HTML element with event latlng
     
-    document.getElementById("mouseCoordinatesBox").innerHTML="newtext";
+document.getElementById("mouseCoordinatesBox").innerHTML="newtext";
+    
 }
-  	//  - second, register an event listener with the map
-  	//    (something like map.on(....))
+//  - second, register an event listener with the map
+//    (something like map.on(....))
 map.on('mousemove', mapHoverHandler);
-  	//  - when it doubt use Google
-  	//    (something to the effect of "leaflet display mouse coordinates"
-  	//    should help)
+//  - when it doubt use Google
+//    (something to the effect of "leaflet display mouse coordinates"
+//    should help)
