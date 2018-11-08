@@ -172,12 +172,24 @@ function mapHoverHandler(eventObject) {
     console.log('mouse lat/long', eventObject.latlng);
     //update mouse coordinates HTML element with event latlng
     
-    document.getElementById("mouseCoordinatesBox").innerHTML = "newtext";
+    //document.getElementById("mouseCoordinatesBox").innerHTML = "newtext";
+    var div = L.latLng('L.latLng');
+    document.getElementById("mouse lat/long").innerHTML = "newtext";
     
 }
 //  - second, register an event listener with the map
 //    (something like map.on(....))
 map.on('mousemove', mapHoverHandler);
 //  - when it doubt use Google
+function getPos(e) {
+    x = e.clientX;
+    y = e.clientY;
+    cursor = "Your Mouse Position Is : " + x + " and " + y;
+    document.getElementById("displayArea").innerHTML = cursor
+}
+
+function stopTracking() {
+    document.getElementById("displayArea").innerHTML = "";
+}
 //    (something to the effect of "leaflet display mouse coordinates"
 //    should help)

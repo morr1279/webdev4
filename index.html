@@ -8,26 +8,40 @@
 		<title>Leaflet Workshop</title>
 
 		<!--library stylesheets-->
+        
 		<!--link rel="stylesheet" href="path_to_folder"-->
 		<link rel="stylesheet" href="css/leaflet.css">
 
 		<!--my stylesheet-->
 		<link rel="stylesheet" href="css/styles.css">
-
+function getPos(e){
+    		x=e.clientX;
+    		y=e.clientY;
+    		cursor="Your Mouse Position Is : " + x + " and " + y ;
+    		document.getElementById("displayArea").innerHTML=cursor
+    	}
+    
+    	function stopTracking(){
+    		document.getElementById("displayArea").innerHTML="";
+    	}
 	</head>
 
 	<body>
 		<!--This is where HTML elements and text go-->
 		<div id="map"></div>
-
+<div id="focusArea" onmousemove="getPos(event)" onmouseout="stopTracking()"><p>Mouse Over This Text And Get The Cursor Position!</p></div>
 		<!--Script links go below elements-->
 		
 		<!--library scripts-->
+        
+    	
+    	<p id="displayArea"></p>
 		<!--script type="text/javascript" src="path_to_folder"></script-->
 		<script type="text/javascript" src="js/leaflet.js"></script>
 
 		<!--main script-->
 		<script type="text/javascript" src="js/main.js"></script>
+        
 
 	</body>
 </html>
